@@ -79,6 +79,9 @@ def two_opt(args):
 def simulated_annealing(args):
     """Peforms simulated annealing to find a solution"""
     try:
+        state = random.getstate()
+        random.seed(4683)
+        #print("annealing start")
         initial_temp = args["initial_temp"]
         alpha = args["alpha"]
 
@@ -121,6 +124,8 @@ def simulated_annealing(args):
             #print(1/get_cost(solution), same_solution)
         solution_container["route"] = solution.copy()
         solution_container["current_distance"] = 1/get_cost(solution, distances)
+        #print("annealing end")
+        random.setstate(state)
         return True
     except Exception as e:
         print(f"EXCEPTION: Could not apply simulated_annealing ({e}), continuing code...")
@@ -204,6 +209,9 @@ def swap_routes(state):
 ### INICIO PARTE DE ACO
 def ant_colony_optimization(args):
     try:
+        state = random.getstate()
+        random.seed(4683)
+        #print("aco start")
         n_ants = args["n_ants"]
         n_iterations = args["n_iterations"]
         alpha = args["alpha"]
@@ -235,6 +243,8 @@ def ant_colony_optimization(args):
         
         solution_container["route"] = best_path.copy()
         solution_container["current_distance"] = best_cost
+        #print("aco end")
+        random.setstate(state)
         return True
     except Exception as e:
         print(f"EXCEPTION: Could not apply ant_colony_optimization ({e}), continuing code...")

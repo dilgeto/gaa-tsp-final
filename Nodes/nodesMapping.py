@@ -33,13 +33,6 @@ nodes_info_mapping = {
             "P3": None   # Placeholder for the operation if false
         }
     ],
-    "NOT": [
-        NOT,
-        {
-            "P1": None  # Placeholder for the predicate
-        }
-    ],
-
     # Leaf Node Functions
     "swap": [
         swap,
@@ -69,11 +62,11 @@ nodes_info_mapping = {
     "ant_colony_optimization": [
         ant_colony_optimization,
         {
-            "alpha": 1,
-            "beta": 2,
+            "alpha": 0.5,
+            "beta": 3,
             "evaporation": 0.5,
             "Q": 100,
-            "n_ants": 30,
+            "n_ants": 15,
             "n_iterations": 100
         }
     ],

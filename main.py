@@ -4,6 +4,7 @@ import time
 import tsplib95
 import math
 import random
+import operator
 from deap import base, creator, gp, tools, algorithms
 
 import globals
@@ -114,7 +115,6 @@ def setup_gp(dataset):
     pset.addPrimitive(placheolder, [str, str], str, "AND")
     pset.addPrimitive(placheolder, [str, str], str, "OR")
     pset.addPrimitive(placheolder, [str, str, str], str, "IF")
-    pset.addPrimitive(placheolder, [str], str, "NOT")
 
     # Add Leaf Nodes as Terminals
     pset.addTerminal(placheolder, str, "swap")
@@ -129,7 +129,7 @@ def setup_gp(dataset):
 
     # Create the toolbox
     toolbox = base.Toolbox()
-    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=6)
+    toolbox.register("expr", gp.genHalfAndHalf, pset=pset, min_=1, max_=3)
     toolbox.register("individual", tools.initIterate, creator.Individual, toolbox.expr)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
@@ -144,7 +144,6 @@ def setup_gp(dataset):
         Returns:
         - Tuple containing the fitness (accuracy or other metric).
         """
-        # TODO: YO
         # Transform the tree into a callable function
         #global check
         #if check:
@@ -153,6 +152,7 @@ def setup_gp(dataset):
         fitness = 0.0
         num_instances = len(data)
 
+        print(individual)
         # For every solution container created from the city sample
         for solution_container in data:
             globals.current_solution_container = solution_container.copy()
@@ -170,6 +170,7 @@ def setup_gp(dataset):
 
         algorithm_error = fitness / num_instances
 
+        print(algorithm_error)
         return (-algorithm_error,)  # Fitness is accuracy
 
     # Register evaluation function
@@ -181,11 +182,14 @@ def setup_gp(dataset):
     toolbox.register("select", tools.selTournament, tournsize=3)
     toolbox.register("compile", gp.compile, pset=pset)
 
+    toolbox.decorate("mate", gp.staticLimit(key=operator.attrgetter("height"), max_value=3))
+    toolbox.decorate("mutate", gp.staticLimit(key=operator.attrgetter("height"), max_value=3))
+
     return toolbox, pset, evaluate_algorithm
 
 
 def main():
-    random.seed(9000)
+    random.seed(1868)
     """
     Main function to run the Genetic Programming framework.
     """
