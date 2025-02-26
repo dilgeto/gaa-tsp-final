@@ -8,7 +8,7 @@ nodes_info_mapping = {
         {
             "P1": None,              # Placeholder for the first predicate
             "P2": None,              # Placeholder for the second operation
-            "max_iterations": 5    # Default maximum iterations
+            "max_iterations": 3    # Default maximum iterations
         }
     ],
     "AND": [

@@ -98,7 +98,10 @@ def obtain_tsp_data():
     # Creating dataset
     solution_container_list = []
     solution_container_list.append(create_solution_container("berlin52",52))
-    solution_container_list.append(create_solution_container("ch150",150))
+    solution_container_list.append(create_solution_container("att48",48))
+    solution_container_list.append(create_solution_container("eil51",51))
+    solution_container_list.append(create_solution_container("st70",70))
+    #solution_container_list.append(create_solution_container("ch150",150))
     return solution_container_list
 
 # Set up DEAP's GP system
@@ -152,7 +155,6 @@ def setup_gp(dataset):
         fitness = 0.0
         num_instances = len(data)
 
-        print(individual)
         # For every solution container created from the city sample
         for solution_container in data:
             globals.current_solution_container = solution_container.copy()
